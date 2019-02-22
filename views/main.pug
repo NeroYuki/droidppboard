@@ -2,17 +2,16 @@ h1 #{title}
 
 table(border="1")
     tbody
-        tr
-            td= "No."
-            td= "UID"
-            td= "Discord ID"
-            td= "Play Count"
-            td= "PP"
+        th(width="40")= "No."
+        th(width="70")= "UID"
+        th(width="150")= "Username"
+        th(width="90")= "Play Count"
+        th(width="90")= "PP"
         each val, index in list
             tr
                 td= index+1
                 td= val.uid
-                td= val.discordid
+                td= val.username
                 td= val.playc
                 td= val.pptotal
     
