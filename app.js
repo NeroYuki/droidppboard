@@ -45,8 +45,10 @@ function makeBoard(entries) {
     // app.get('/', (req, res) => {
     //     res.send(resArr);
     // });
-
-    const server = app.listen(7000, () => {
+    
+    const port = process.env.PORT || 5000;
+    
+    app.listen(port, () => {
         console.log(`Express running → PORT ${server.address().port}`);
     });
 }
