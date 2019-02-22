@@ -24,7 +24,7 @@ clientdb.connect( function(err, db) {
 function makeBoard(entries) {
     app.get('/', (req, res) => {
         var ppsort = { pptotal: -1 };
-        binddb.find({}, { projection: { _id: 0, discordid: 1, uid: 1, pptotal: 1 , playc: 1}}).sort(ppsort).toArray(function(err, resarr) {
+        binddb.find({}, { projection: { _id: 0, discordid: 1, uid: 1, pptotal: 1 , playc: 1, username: 1}}).sort(ppsort).toArray(function(err, resarr) {
             if (err) throw err;
             //console.log(res);
             var entries = [];
