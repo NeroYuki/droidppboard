@@ -49,7 +49,7 @@ function makeBoard(entries) {
     const port = process.env.PORT || 5000;
     
     app.listen(port, () => {
-        console.log(`Express running → PORT ${server.address().port}`);
+        console.log(`Express running → PORT ${port}`);
     });
 }
 
