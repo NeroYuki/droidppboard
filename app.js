@@ -42,6 +42,23 @@ function makeBoard(entries) {
         });
     });
 
+    app.get('/profile', (req, res) => {
+        var uid = req.url.split('=')[1]
+        binddb.findOne({uid: uid}, function(err, findres){
+            if (err) throw err;
+            var title = "Player Profile";
+            var username = findres.username;
+            var pptotal = findres.pptotal.toFixed(2);
+            var ppentries = findres.pp;
+            res.render('profile', {
+                title: title,
+                username: username,
+                pptotal: pptotal,
+                entries: ppentries
+            })
+        }) 
+    })
+
     // app.get('/', (req, res) => {
     //     res.send(resArr);
     // });
