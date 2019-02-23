@@ -11,7 +11,8 @@ table(border="1")
             tr
                 td= index+1
                 td= val.uid
-                td= val.username
+                td
+                    a(href='/profile?uid='+val.uid)= val.username
                 td= val.playc
                 td= val.pptotal
     
