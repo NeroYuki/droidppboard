@@ -67,6 +67,11 @@ function makeBoard(entries) {
         var lineslit = input.split('+')
         var b = lineslit[0];
         var m = lineslit[1];
+        if (!b) {
+            console.log('error: no map input'); 
+            res.send('error: no map input')
+            return;
+        }
         if (m) var mods = osu.modbits.from_string(m.slice(0) || "")
         else var mods = 0;
         console.log(mods);
@@ -74,12 +79,18 @@ function makeBoard(entries) {
             var data = '';
             mres.on('data', (chunk) => {data += chunk;})
             mres.on('end', () => {
+                if (!data) {
+                    console.log('error: map not found'); 
+                    res.send('error: map not found')
+                    return;
+                }
                 var parser = new osu.parser();
                 parser.feed(data);
                 map = parser.map;
                 if (map.ncircles == 0 && map.nsliders == 0) {
-                    console.log('Error: no object found'); 
+                    console.log('error: no object found'); 
                     res.send('error: no object found')
+                    return;
                 }
                 var stars = new osu.diff().calc({map: map, mods: mods});
                 res.send(stars.toString());
