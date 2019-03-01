@@ -77,8 +77,13 @@ function makeBoard(entries) {
                 var parser = new osu.parser();
                 parser.feed(data);
                 map = parser.map;
+                if (nmap.ncircles == 0 && nmap.nsliders == 0) {
+                    console.log(target[0] + ' - Error: no object found'); 
+                    res.send('error: no object found')
+                }
                 var stars = new osu.diff().calc({map: map, mods: mods});
                 res.send(stars.toString());
+                parser.reset();
             }) 
         })
     })
