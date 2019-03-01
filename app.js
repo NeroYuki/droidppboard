@@ -1,6 +1,8 @@
 var express = require('express');
 var mongodb = require('mongodb');
 var pug = require('pug');
+var https = require('https');
+var osu = require ('./ojsama')
 require("dotenv").config();
 var dbkey = process.env.DB_KEY
 
@@ -57,6 +59,28 @@ function makeBoard(entries) {
                 entries: ppentries
             })
         }) 
+    })
+
+    app.get('/beatmapsr', (req, res) => {
+        console.log(req.url);
+        var input = req.url.split('?b=')[1];
+        var lineslit = input.split('+')
+        var b = lineslit[0];
+        var m = lineslit[1];
+        if (m) var mods = osu.modbits.from_string(m.slice(0) || "")
+        else var mods = 0;
+        console.log(mods);
+        https.get('https://osu.ppy.sh/osu/' + b, (mres) => {
+            var data = '';
+            mres.on('data', (chunk) => {data += chunk;})
+            mres.on('end', () => {
+                var parser = new osu.parser();
+                parser.feed(data);
+                map = parser.map;
+                var stars = new osu.diff().calc({map: map, mods: mods});
+                res.send(stars.toString());
+            }) 
+        })
     })
 
     // app.get('/', (req, res) => {
