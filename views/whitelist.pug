@@ -1,0 +1,41 @@
+
+h1 #{title}
+
+h3
+    a= "Menu: "
+    a(href='/')= " | Leaderboard | "
+    a(href='/whitelist?page=1')= " | Whitelist | "
+    a(href='/about')= " | About | "
+
+hr
+
+style
+    include table.css
+
+div
+    a(href='/whitelist?page='+(page-1))= " | <<< Prev Page | "
+    a= " | Page: " + page + " | "
+    a(href='/whitelist?page='+(page+1))= " | Next Page >>> | "
+
+hr
+
+table(border="0", width="100%")
+    tbody
+        th(width="40")= "Map ID"
+        th(width="70")= "Map Name"
+        th(width="150")= "osu! redirect"
+        each val in list
+            tr
+                td= val.mapid
+                td= val.mapname
+                td
+                    a(href='https://osu.ppy.sh/b/'+val.mapid)= "Link"
+
+hr
+
+div
+    a(href='/whitelist?page='+(page-1))= " | <<< Prev Page | "
+    a= " | Page: " + page + " | "
+    a(href='/whitelist?page='+(page+1))= " | Next Page >>> | "
+
+
