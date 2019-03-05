@@ -1,5 +1,13 @@
 h1 #{title}
 
+h3
+    a= "Menu: "
+    a(href='/')= " | Leaderboard | "
+    a(href='/whitelist?page=1')= " | Whitelist | "
+    a(href='/about')= " | About | "
+
+hr
+
 h2 Username: #{username}
 
 h3 Total PP: #{pptotal}

@@ -1,6 +1,17 @@
+style
+    include table.css
+
 h1 #{title}
 
-table(border="1")
+h3
+    a= "Menu: "
+    a(href='/')= " | Leaderboard | "
+    a(href='/whitelist?page=1')= " | Whitelist | "
+    a(href='/about')= " | About | "
+
+hr
+
+table
     tbody
         th(width="40")= "No."
         th(width="70")= "UID"
