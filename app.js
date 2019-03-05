@@ -20,10 +20,11 @@ clientdb.connect( function(err, db) {
     maindb = db.db('ElainaDB');
     console.log("DB connection established");
     binddb = maindb.collection('userbind');
-    makeBoard(binddb);
+    whitelistdb = maindb.collection('mapwhitelist');
+    makeBoard();
 });
 
-function makeBoard(entries) {
+function makeBoard() {
     app.get('/', (req, res) => {
         var ppsort = { pptotal: -1 };
         binddb.find({}, { projection: { _id: 0, discordid: 1, uid: 1, pptotal: 1 , playc: 1, username: 1}}).sort(ppsort).toArray(function(err, resarr) {
@@ -44,8 +45,28 @@ function makeBoard(entries) {
         });
     });
 
+    app.get('/whitelist', (req, res) => {
+        var page = parseInt(req.url.split('?page=')[1]);
+        if (!page) {page = 1;}
+        var mapsort = { mapid: -1 };
+        whitelistdb.find({}, {projection: {_id: 0}}).sort(mapsort).skip((page-1)*30).limit(30).toArray(function(err, resarr) {
+            //console.log(resarr);
+            var title = 'Map Whitelisting Board'
+            res.render('whitelist', {
+                title: title,
+                list: resarr,
+                page: page
+            })
+        })
+    });
+
+    app.get('/about', (req, res) => {
+        res.render('about');
+    });
+
     app.get('/profile', (req, res) => {
-        var uid = req.url.split('=')[1]
+        var uid = req.url.split('uid=')[1]
+        if (!uid) {res.send("404 Page Not Found"); return;}
         binddb.findOne({uid: uid}, function(err, findres){
             if (err) throw err;
             var title = "Player Profile";
