@@ -1,29 +1,37 @@
+style
+    include table.css
+    include nav.css
+    include default.css
 
 h1 #{title}
 
 h3
-    a= "Menu: "
-    a(href='/')= " | Leaderboard | "
-    a(href='/whitelist?page=1')= " | Whitelist | "
-    a(href='/about')= " | About | "
-
-hr
-
-style
-    include table.css
+    ul
+        li 
+            a= "Menu"
+        li 
+            a(href='/')= "Leaderboard"
+        li 
+            a(href='/whitelist?page=1', class='active')= "Whitelist"
+        li 
+            a(href='/about')= "About"
 
 div
-    a(href='/whitelist?page='+(page-1))= " | <<< Prev Page | "
-    a= " | Page: " + page + " | "
-    a(href='/whitelist?page='+(page+1))= " | Next Page >>> | "
+    ul(class="pagerow")
+        li
+            a(href='/whitelist?page='+(page-1), class="pagenav")= "<<< Prev Page"
+        li
+            a(class="pagecount")= " Page: " + page
+        li
+            a(href='/whitelist?page='+(page+1), class="pagenav")= "Next Page >>>"
 
 hr
 
 table(border="0", width="100%")
     tbody
-        th(width="40")= "Map ID"
-        th(width="70")= "Map Name"
-        th(width="150")= "osu! redirect"
+        th(width="10%")= "Map ID"
+        th(width="80%")= "Map Name"
+        th(width="10%")= "osu! redirect"
         each val in list
             tr
                 td= val.mapid
@@ -34,8 +42,12 @@ table(border="0", width="100%")
 hr
 
 div
-    a(href='/whitelist?page='+(page-1))= " | <<< Prev Page | "
-    a= " | Page: " + page + " | "
-    a(href='/whitelist?page='+(page+1))= " | Next Page >>> | "
+    ul(class="pagerow")
+        li
+            a(href='/whitelist?page='+(page-1), class="pagenav")= "<<< Prev Page"
+        li
+            a(class="pagecount")= " Page: " + page
+        li
+            a(href='/whitelist?page='+(page+1), class="pagenav")= "Next Page >>>"
 
 

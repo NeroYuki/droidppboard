@@ -1,14 +1,28 @@
-table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
+@font-face {
+    font-family: Exo;
+    src: 
+        url(fonts/Exo-Medium.ttf),
+        url(fonts/Exo-Semi.ttf);
 }
 
-h3 { 
+
+td a {
     display: block;
-    font-size: 1.17em;
-    margin-top: 1em;
-    margin-bottom: 1em;
-    margin-left: 0.5em;
-    margin-right: 1em;
-    font-weight: bold;
-  }
+    text-decoration: none;
+    color: black;
+    font: 14px Exo;
+}
+
+td {
+    font: 14px Exo;
+    padding-left: 12px;
+}
+
+th {
+    font: 16px Exo;
+    font-weight: 650;
+}
+
+table, th, td {
+    border-bottom: 1px solid #ddd;
+}

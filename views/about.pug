@@ -1,10 +1,19 @@
+style
+    include nav.css
+    include default.css
+
 h1 Info
 
 h3
-    a= "Menu: "
-    a(href='/')= " | Leaderboard | "
-    a(href='/whitelist?page=1')= " | Whitelist | "
-    a(href='/about')= " | About | "
+    ul
+        li 
+            a= "Menu"
+        li 
+            a(href='/')= "Leaderboard"
+        li 
+            a(href='/whitelist?page=1')= "Whitelist"
+        li 
+            a(href='/about', class='active')= "About"
 
 hr
 

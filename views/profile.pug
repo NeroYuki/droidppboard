@@ -1,10 +1,20 @@
+style
+    include nav.css
+    include default.css
+    include ppentry.css
+
 h1 #{title}
 
 h3
-    a= "Menu: "
-    a(href='/')= " | Leaderboard | "
-    a(href='/whitelist?page=1')= " | Whitelist | "
-    a(href='/about')= " | About | "
+    ul
+        li 
+            a= "Menu"
+        li 
+            a(href='/')= "Leaderboard"
+        li 
+            a(href='/whitelist?page=1')= "Whitelist"
+        li 
+            a(href='/about')= "About"
 
 hr
 
@@ -12,12 +22,11 @@ h2 Username: #{username}
 
 h3 Total PP: #{pptotal}
 
-ul(type="None")
+ul(type="None", class='ppentry')
     each val, index in entries
-        li
+        li(class='ppentry')
             b= (index+1)
                 =". " + val[1]
-        li= "-> Raw PP: " 
+        li(class='ppentry2nd')= "-> Raw PP: " 
             b= val[2]
                 small= " (Net pp: " + (val[2]*(Math.pow(0.95,index))).toFixed(2) + ")"
-        <li>--------------------------------------------------------------------------</li>

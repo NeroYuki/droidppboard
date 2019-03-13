@@ -1,29 +1,46 @@
 style
     include table.css
+    include nav.css
+    include default.css
 
 h1 #{title}
 
 h3
-    a= "Menu: "
-    a(href='/')= " | Leaderboard | "
-    a(href='/whitelist?page=1')= " | Whitelist | "
-    a(href='/about')= " | About | "
+    ul
+        li 
+            a= "Menu"
+        li 
+            a(href='/', class='active')= "Leaderboard"
+        li 
+            a(href='/whitelist?page=1')= "Whitelist"
+        li 
+            a(href='/about')= "About"
 
 hr
 
-table
+table(width="100%")
     tbody
-        th(width="40")= "No."
-        th(width="70")= "UID"
-        th(width="150")= "Username"
-        th(width="90")= "Play Count"
-        th(width="90")= "PP"
+        th(width="5%")= "No."
+        th(width="10%")= "UID"
+        th(width="63%")= "Username"
+        th(width="10%")= "Play Count"
+        th(width="12%")= "PP"
         each val, index in list
             tr
-                td= index+1
+                td= (page-1)*50+index+1
                 td= val.uid
                 td
                     a(href='/profile?uid='+val.uid)= val.username
                 td= val.playc
                 td= val.pptotal
+
+hr
     
+div
+    ul(class="pagerow")
+        li
+            a(href='/?page='+(page-1), class="pagenav")= "<<< Prev Page"
+        li
+            a(class="pagecount")= " Page: " + page
+        li
+            a(href='/?page='+(page+1), class="pagenav")= "Next Page >>>"

@@ -1,0 +1,21 @@
+@font-face {
+    font-family: Exo;
+    src: 
+        url(fonts/Exo-Medium.ttf),
+        url(fonts/Exo-Semi.ttf);
+}
+
+h1 {
+    font: 32px Exo;
+    font-weight: 700;
+}
+
+h3 {
+    font: 24px Exo;
+    font-weight: 550;
+}
+
+h3 {
+    font: 20px Exo;
+    font-weight: 450;
+}

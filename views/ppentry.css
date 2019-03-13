@@ -1,0 +1,31 @@
+@font-face {
+    font-family: Exo;
+    src: 
+        url(fonts/Exo-Medium.ttf),
+        url(fonts/Exo-Semi.ttf);
+}
+
+.ppentry {
+    color: white;
+    background-color: #444;
+    float: initial;
+    display: block;
+    font: 14px Exo;
+    font-weight: 400;
+    padding: 8px 8px;
+    border-left: 1px solid #bbb;
+    border-top: 1px solid #bbb;
+}
+
+.ppentry2nd {
+    color: white;
+    background-color: #666;
+    float: initial;
+    text-align: right;
+    display: block;
+    font: 14px Exo;
+    font-weight: 400;
+    padding: 8px 8px;
+    border-left: 1px solid #bbb;
+    border-bottom: 1px solid #bbb;
+}
