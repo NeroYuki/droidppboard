@@ -26,8 +26,10 @@ clientdb.connect( function(err, db) {
 
 function makeBoard() {
     app.get('/', (req, res) => {
+        var page = parseInt(req.url.split('?page=')[1]);
+        if (!page) {page = 1;}
         var ppsort = { pptotal: -1 };
-        binddb.find({}, { projection: { _id: 0, discordid: 1, uid: 1, pptotal: 1 , playc: 1, username: 1}}).sort(ppsort).toArray(function(err, resarr) {
+        binddb.find({}, { projection: { _id: 0, discordid: 1, uid: 1, pptotal: 1 , playc: 1, username: 1}}).sort(ppsort).skip((page-1)*50).limit(50).toArray(function(err, resarr) {
             if (err) throw err;
             //console.log(res);
             var entries = [];
@@ -40,7 +42,8 @@ function makeBoard() {
             var title = 'PP Board'
             res.render('main', {
                 title: title,
-                list: entries
+                list: entries,
+                page: page
             });        
         });
     });
@@ -48,7 +51,7 @@ function makeBoard() {
     app.get('/whitelist', (req, res) => {
         var page = parseInt(req.url.split('?page=')[1]);
         if (!page) {page = 1;}
-        var mapsort = { mapid: -1 };
+        var mapsort = { mapname: 1 };
         whitelistdb.find({}, {projection: {_id: 0}}).sort(mapsort).skip((page-1)*30).limit(30).toArray(function(err, resarr) {
             //console.log(resarr);
             var title = 'Map Whitelisting Board'
