@@ -14,6 +14,37 @@ let uri = 'mongodb://' + dbkey + '@elainadb-shard-00-00-r6qx3.mongodb.net:27017,
 let maindb = '';
 let clientdb = new mongodb.MongoClient(uri, {useNewUrlParser: true})
 
+function convertURI(input) {
+    input = decodeURIComponent(input);
+    var arr = input.split("");
+    for (i in arr) if (i != arr.length-1 && arr[i] == '+' && arr[parseInt(i)+1] != '+') {arr[i] = ' ';}  
+    input = arr.join("");
+    return input;
+}
+
+function convertURIregex(input) {
+    input = decodeURIComponent(input);
+    var arr = input.split("");
+    for (i in arr) {
+        if (arr[i] == '*') {arr[i] = '[*]';}
+        if (arr[i] == '?') {arr[i] = '[?]';}
+        if (arr[i] == '$') {arr[i] = '[$]';}
+        if (arr[i] == '(') {arr[i] = '[(]';}
+        if (arr[i] == ')') {arr[i] = '[)]';}
+        if (arr[i] == '[') {arr[i] = '[[]';}
+        if (arr[i] == ']') {arr[i] = '[]]';}
+        if (arr[i] == '"') {arr[i] = '["]';}
+        if (arr[i] == "'") {arr[i] = "[']";}
+        if (arr[i] == ":") {arr[i] = "[:]";}
+        if (i != arr.length-1 && arr[i] == '+' && arr[parseInt(i)+1] != '+') {arr[i] = ' ';}
+        if (arr[i] == "+") {arr[i] = "[+]";}
+    }
+    input = arr.join("");
+    return input;
+}
+
+
+
 clientdb.connect( function(err, db) {
     if (err) throw err;
     //if (db) 
@@ -50,15 +81,24 @@ function makeBoard() {
 
     app.get('/whitelist', (req, res) => {
         var page = parseInt(req.url.split('?page=')[1]);
+        var query = req.url.split('?query=')[1]
+        var mapquery;
         if (!page) {page = 1;}
+        if (!query) {mapquery = {}; query = '';}
+        else {
+            var regexquery = new RegExp(convertURIregex(query), 'i'); 
+            mapquery = {mapname: regexquery};
+        }
+        //mapquery = {mapname: /namirin/g}
         var mapsort = { mapname: 1 };
-        whitelistdb.find({}, {projection: {_id: 0}}).sort(mapsort).skip((page-1)*30).limit(30).toArray(function(err, resarr) {
+        whitelistdb.find(mapquery, {projection: {_id: 0}}).sort(mapsort).skip((page-1)*30).limit(30).toArray(function(err, resarr) {
             //console.log(resarr);
             var title = 'Map Whitelisting Board'
             res.render('whitelist', {
                 title: title,
                 list: resarr,
-                page: page
+                page: page,
+                query: convertURI(query)
             })
         })
     });
