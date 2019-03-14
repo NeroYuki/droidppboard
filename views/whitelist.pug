@@ -16,14 +16,22 @@ h3
         li 
             a(href='/about')= "About"
 
+    div(class="queryall")
+        h5(class="queryshow")= "Current query: " + query
+        form
+            input(type="text", name="query", id='rcorners', hint="Search")
+            input(type="submit", id='rcorners2', value="Search")
+
+hr
+
 div
     ul(class="pagerow")
         li
-            a(href='/whitelist?page='+(page-1), class="pagenav")= "<<< Prev Page"
+            a(href='/whitelist?page=' + (page-1) + (query ? '?query='+query : ''), class="pagenav")= "<<< Prev Page"
         li
             a(class="pagecount")= " Page: " + page
         li
-            a(href='/whitelist?page='+(page+1), class="pagenav")= "Next Page >>>"
+            a(href='/whitelist?page=' + (page+1) + (query ? '?query='+query : ''), class="pagenav")= "Next Page >>>"
 
 hr
 

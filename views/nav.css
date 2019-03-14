@@ -15,6 +15,7 @@ ul {
 
 li {
     float: left;
+    background-color: #333;
     border-right: 1px solid #bbb;
 }
 
@@ -25,6 +26,13 @@ li a {
     padding: 14px 16px;
     text-decoration: none;
     font: 16px Exo;
+}
+
+form {
+    float: right;
+    padding-top: 24px;
+    padding-right: 10px;
+    background-color: #333;
 }
 
 .active {
@@ -49,4 +57,34 @@ li a {
 
 .pagerow {
     background-color: #fff;
+}
+
+.queryshow {
+    color: white;
+    padding-left: 10px;
+    display: inline-table;
+    background-color: #333;
+}
+
+.queryall {
+    max-height: 55px;
+    border-top: 2px solid #bbb;
+    background-color: #333;
+}
+
+#rcorners {
+    border-radius: 8px;
+    margin-right: 15px;
+    background-color: white;
+    padding: 8px;
+    width: 200px;
+    height: 25px;  
+}
+
+#rcorners2 {
+    border-radius: 8px;
+    border: 2px solid greenyellow;
+    background-color: greenyellow;
+    width: 80px;
+    height: 25px;  
 }
