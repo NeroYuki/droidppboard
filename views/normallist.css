@@ -1,0 +1,35 @@
+ul.nav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    
+}
+
+li.nav {
+    float: left;
+    background-color: #333;
+    border-right: 1px solid #bbb;
+}
+
+li a.nav {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font: 16px Exo;
+}
+
+.active.nav {
+    background-color: #4CAF50;
+}
+
+#rcorners2 {
+    border-radius: 8px;
+    border: 2px solid greenyellow;
+    background-color: greenyellow;
+    width: 120px;
+    height: 50px;  
+}

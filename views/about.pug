@@ -1,19 +1,19 @@
 style
-    include nav.css
     include default.css
+    include normallist.css
 
 h1 Info
 
 h3
-    ul
-        li 
-            a= "Menu"
-        li 
-            a(href='/')= "Leaderboard"
-        li 
-            a(href='/whitelist?page=1')= "Whitelist"
-        li 
-            a(href='/about', class='active')= "About"
+    ul(class='nav')
+        li(class='nav')
+            a(class='nav')= "Menu"
+        li(class='nav') 
+            a(href='/', class='nav')= "Leaderboard"
+        li(class='nav', ) 
+            a(href='/whitelist?page=1', class='nav')= "Whitelist"
+        li(class='nav') 
+            a(href='/about', class='active', class='nav')= "About / Donation"
 
 hr
 
@@ -21,3 +21,26 @@ p= "Elaina osu!droid PP Project"
 |
 |
 p= "Made by -Nero Yuki-"
+|
+|
+p= "This is one of my fun project for our small osu!droid discord community. If you like it consider to support this poor college student uwu"
+|
+|
+h4
+    a(href='https://paypal.me/NguyenNgocDang', id='rcorners2')= "Donation Here (Paypal only)"
+|
+|
+p= "You can PM me through Discord (-Nero Yuki-#7193) if you want to donate with different mean"
+|
+|
+h5= "Benefits"
+ul
+    li= "Actually, there is none lol, but it helps me, and i will put a list of donor here i guess XD"
+    li= "I don't know lol"
+|
+|
+p= "Donor List"
+|
+|
+ul
+    li= "Nothing here yet uwu"
