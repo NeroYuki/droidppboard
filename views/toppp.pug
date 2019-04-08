@@ -1,0 +1,44 @@
+style
+    include table.css
+    include nav.css
+    include default.css
+
+h1 Top PP Play
+
+h3
+    ul
+        li 
+            a= "Menu"
+        li 
+            a(href='/')= "Leaderboard"
+        li 
+            a(href='/whitelist?page=1')= "Whitelist"
+        li 
+            a(href='/toppp', class='active')= "Top PP"
+        li 
+            a(href='/about')= "About / Donation"
+
+hr
+
+table(width="100%")
+    tbody
+        th(width="3%")= "No."
+        th(width="11%")= "Username"
+        th(width="67%")= "Map Name (Difficulty) + Mod"
+        th(width="7%")= "Raw PP"
+        th(width="5%")= "Combo"
+        th(width="5%")= "Accuracy"
+        th(width="5%")= "Misses"
+        each val, index in pplist
+            tr
+                td= index+1
+                td= val.username
+                td= val.map
+                td= val.rawpp
+                td= val.combo
+                td= val.acc_percent
+                td= val.miss_c
+
+hr
+
+p= "Top pp will be updated once each 30 minutes"

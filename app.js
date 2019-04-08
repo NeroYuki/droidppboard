@@ -43,7 +43,7 @@ function convertURIregex(input) {
     return input;
 }
 
-
+top_pp_list = [];
 
 clientdb.connect( function(err, db) {
     if (err) throw err;
@@ -52,8 +52,36 @@ clientdb.connect( function(err, db) {
     console.log("DB connection established");
     binddb = maindb.collection('userbind');
     whitelistdb = maindb.collection('mapwhitelist');
+    refreshtopPP(binddb)
+    setInterval(() => {
+        refreshtopPP(binddb)
+    }, 1800000)
     makeBoard();
 });
+
+function refreshtopPP(binddb) {
+    top_pp_list = []
+    binddb.find({}, { projection: { _id: 0, username: 1, pp: 1}}).toArray(function(err, res) {
+        top_pp_list = [];
+        res.forEach((val, index) => {
+            //console.log(val.username)
+            for (i in val.pp) {
+                var top_pp_entry = {
+                    username: val.username,
+                    map: val.pp[i][1],
+                    rawpp: parseFloat(val.pp[i][2]),
+                    combo: isNaN(parseInt(val.pp[i][3]))? "-" : parseInt(val.pp[i][3]),
+                    acc_percent: isNaN(parseInt(val.pp[i][4]))? "-" : parseFloat(val.pp[i][4]).toFixed(2),
+                    miss_c: isNaN(parseInt(val.pp[i][5]))? "-" : parseInt(val.pp[i][5])
+                }
+                top_pp_list.push(top_pp_entry)
+            }
+            top_pp_list.sort(function(a, b) {return b.rawpp - a.rawpp;})
+            if (top_pp_list.length >= 100) top_pp_list.splice(100);
+            if (index == res.length - 1) {console.log("done")}
+        })
+    })
+}
 
 function makeBoard() {
     app.get('/', (req, res) => {
@@ -105,6 +133,12 @@ function makeBoard() {
 
     app.get('/about', (req, res) => {
         res.render('about');
+    });
+
+    app.get('/toppp', (req, res) => {
+        res.render('toppp', {
+            pplist: top_pp_list
+        });
     });
 
     app.get('/profile', (req, res) => {
