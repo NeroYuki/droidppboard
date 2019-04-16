@@ -7,17 +7,17 @@ style
 
 h1 #{title}
 
-h3
-    ul
-        li 
+h3(class='nav')
+    ul(class='nav')
+        li
             a= "Menu"
-        li 
+        li
             a(href='/', class='active')= "Leaderboard"
-        li 
+        li
             a(href='/whitelist?page=1')= "Whitelist"
-        li 
+        li
             a(href='/toppp')= "Top PP"
-        li 
+        li
             a(href='/about')= "About / Donation"
 
 hr
