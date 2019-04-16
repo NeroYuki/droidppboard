@@ -28,6 +28,10 @@ li a {
     font: 16px Exo;
 }
 
+h3>ul>li:hover {
+    background-color:rgb(100,150,215);
+}
+
 form {
     float: right;
     padding-top: 24px;

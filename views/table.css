@@ -25,4 +25,16 @@ th {
 
 table, th, td {
     border-bottom: 1px solid #ddd;
+    text-align:center;
 }
+
+tbody>tr>td:nth-child(3) {
+    text-align:start !important;
+}
+
+tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.15);
+}
+
+.item:hover {
+    background-color:rgb(100, 150, 215)
