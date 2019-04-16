@@ -5,7 +5,7 @@
         url(fonts/Exo-Semi.ttf);
 }
 
-ul {
+ul.nav {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -13,13 +13,13 @@ ul {
     background-color: #333;
   }
 
-li {
+li.nav {
     float: left;
     background-color: #333;
     border-right: 1px solid #bbb;
 }
 
-li a {
+a.nav {
     display: block;
     color: white;
     text-align: center;
@@ -48,6 +48,7 @@ form {
     padding: 6px 6px;
     background-color: rgb(0, 132, 255);
     font: 14px Exo;
+    text-decoration: none;
 }
 
 .pagecount {
@@ -60,6 +61,10 @@ form {
 }
 
 .pagerow {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    list-style-type: none;
     background-color: #fff;
 }
 
