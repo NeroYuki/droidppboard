@@ -30,14 +30,13 @@ table(width="100%")
         th(width="10%")= "Play Count"
         th(width="12%")= "PP"
         each val, index in list
-            .item
-                tr
-                    td= (page-1)*50+index+1
-                    td= val.uid
-                    td
-                        a(href='/profile?uid='+val.uid)= val.username
-                    td= val.playc
-                    td= val.pptotal
+            tr
+                td= (page-1)*50+index+1
+                td= val.uid
+                td
+                    a(href='/profile?uid='+val.uid)= val.username
+                td= val.playc
+                td= val.pptotal
 
 hr
     
