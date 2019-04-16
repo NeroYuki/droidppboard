@@ -7,18 +7,18 @@ style
 
 h1 #{title}
 
-h3(class='nav')
+h3
     ul(class='nav')
-        li
-            a= "Menu"
-        li
-            a(href='/', class='active')= "Leaderboard"
-        li
-            a(href='/whitelist?page=1')= "Whitelist"
-        li
-            a(href='/toppp')= "Top PP"
-        li
-            a(href='/about')= "About / Donation"
+        li(class='nav')
+            a(class='nav')= "Menu"
+        li(class='nav')
+            a(href='/', class='active',class='nav')= "Leaderboard"
+        li(class='nav')
+            a(href='/whitelist?page=1',class='nav')= "Whitelist"
+        li(class='nav')
+            a(href='/toppp',class='nav')= "Top PP"
+        li(class='nav')
+            a(href='/about',class='nav')= "About / Donation"
 
 hr
 
@@ -43,9 +43,9 @@ hr
     
 div
     ul(class="pagerow")
-        li
-            a(href='/?page='+(page-1), class="pagenav")= "<<< Prev Page"
-        li
+        li(class="nav")
+            a(href='/?page=' + (page-1) , class="pagenav")= "<<< Prev Page"
+        li(class="nav")
             a(class="pagecount")= " Page: " + page
-        li
-            a(href='/?page='+(page+1), class="pagenav")= "Next Page >>>"
+        li(class="nav")
+            a(href='/?page=' + (page+1) , class="pagenav")= "Next Page >>>"

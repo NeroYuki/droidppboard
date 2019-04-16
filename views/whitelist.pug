@@ -8,17 +8,17 @@ style
 h1 #{title}
 
 h3
-    ul
-        li 
-            a= "Menu"
-        li 
-            a(href='/')= "Leaderboard"
-        li 
-            a(href='/whitelist?page=1', class='active')= "Whitelist"
-        li 
-            a(href='/toppp')= "Top PP"
-        li 
-            a(href='/about')= "About / Donation"
+    ul(class='nav')
+        li(class='nav')
+            a(class='nav')= "Menu"
+        li(class='nav')
+            a(href='/',class='nav')= "Leaderboard"
+        li(class='nav')
+            a(href='/whitelist?page=1',class='nav', class='active')= "Whitelist"
+        li(class='nav')
+            a(href='/toppp',class='nav')= "Top PP"
+        li(class='nav')
+            a(href='/about',class='nav')= "About / Donation"
 
     div(class="queryall")
         h5(class="queryshow")= "Current query: " + query
@@ -30,11 +30,11 @@ hr
 
 div
     ul(class="pagerow")
-        li
+        li(class="nav")
             a(href='/whitelist?page=' + (page-1) + (query ? '?query='+query : ''), class="pagenav")= "<<< Prev Page"
-        li
+        li(class="nav")
             a(class="pagecount")= " Page: " + page
-        li
+        li(class="nav")
             a(href='/whitelist?page=' + (page+1) + (query ? '?query='+query : ''), class="pagenav")= "Next Page >>>"
 
 hr
@@ -55,11 +55,11 @@ hr
 
 div
     ul(class="pagerow")
-        li
-            a(href='/whitelist?page='+(page-1), class="pagenav")= "<<< Prev Page"
-        li
+        li(class="nav")
+            a(href='/whitelist?page=' + (page-1) + (query ? '?query='+query : ''), class="pagenav")= "<<< Prev Page"
+        li(class="nav")
             a(class="pagecount")= " Page: " + page
-        li
-            a(href='/whitelist?page='+(page+1), class="pagenav")= "Next Page >>>"
+        li(class="nav")
+            a(href='/whitelist?page=' + (page+1) + (query ? '?query='+query : ''), class="pagenav")= "Next Page >>>"
 
 
