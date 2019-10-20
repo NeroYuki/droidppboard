@@ -144,6 +144,8 @@ function makeBoard() {
     app.get('/profile', (req, res) => {
         var uid = req.url.split('uid=')[1]
         if (!uid) {res.send("404 Page Not Found"); return;}
+        else if (isNaN(uid)) {res.send("404 Page Not Found"); return;}
+        else {
         binddb.findOne({uid: uid}, function(err, findres){
             if (err) throw err;
             var title = "Player Profile";
@@ -156,7 +158,7 @@ function makeBoard() {
                 pptotal: pptotal,
                 entries: ppentries
             })
-        }) 
+        })}
     })
 
     app.get('/beatmapsr', (req, res) => {
