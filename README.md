@@ -1,2 +1,1 @@
-# Test Website
-This is a testing website
+Leaderboard website for experimental osu!droid performance point
