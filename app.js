@@ -64,15 +64,14 @@ function refreshtopPP(binddb) {
     binddb.find({}, { projection: { _id: 0, username: 1, pp: 1}}).toArray(function(err, res) {
         top_pp_list = [];
         res.forEach((val, index) => {
-            //console.log(val.username)
             for (i in val.pp) {
                 var top_pp_entry = {
                     username: val.username,
-                    map: val.pp[i][1],
-                    rawpp: parseFloat(val.pp[i][2]),
-                    combo: isNaN(parseInt(val.pp[i][3]))? "-" : parseInt(val.pp[i][3]),
-                    acc_percent: isNaN(parseInt(val.pp[i][4]))? "-" : parseFloat(val.pp[i][4]).toFixed(2),
-                    miss_c: isNaN(parseInt(val.pp[i][5]))? "-" : parseInt(val.pp[i][5])
+                    map: val.pp[i].title,
+                    rawpp: val.pp[i].pp,
+                    combo: val.pp[i].combo,
+                    acc_percent: val.pp[i].accuracy,
+                    miss_c: val.pp[i].miss
                 }
                 top_pp_list.push(top_pp_entry)
             }
@@ -117,7 +116,6 @@ function makeBoard() {
             var regexquery = new RegExp(convertURIregex(query), 'i'); 
             mapquery = {mapname: regexquery};
         }
-        //mapquery = {mapname: /namirin/g}
         var mapsort = { mapname: 1 };
         whitelistdb.find(mapquery, {projection: {_id: 0}}).sort(mapsort).skip((page-1)*30).limit(30).toArray(function(err, resarr) {
             //console.log(resarr);
