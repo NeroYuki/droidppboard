@@ -30,7 +30,10 @@ ul(type="None", class='ppentry')
     each val, index in entries
         li(class='ppentry')
             b= (index+1)
-                =". " + val[1]
+                =". " + val.title
+                if val.mods
+                  = " +" + val.mods
+                  
         li(class='ppentry2nd')= "-> Raw PP: " 
-            b= val[2]
-                small= " (Net pp: " + (val[2]*(Math.pow(0.95,index))).toFixed(2) + ")"
+            b= val.pp
+                small= " (Net pp: " + (val.pp*(Math.pow(0.95,index))).toFixed(2) + ")"
