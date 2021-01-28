@@ -67,7 +67,7 @@ function refreshtopPP(binddb) {
             for (i in val.pp) {
                 var top_pp_entry = {
                     username: val.username,
-                    map: val.pp[i].title,
+                    map: val.pp[i].title + (val.pp[i].mods ? " +" + val.pp[i].mods : ""),
                     rawpp: val.pp[i].pp,
                     combo: val.pp[i].combo,
                     acc_percent: val.pp[i].accuracy,
