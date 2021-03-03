@@ -7,7 +7,7 @@
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "mongodb": "^3.1.13",
-    "pug": "^2.0.3"
+    "pug": "^3.0.1"
   },
   "devDependencies": {},
   "scripts": {
