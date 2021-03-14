@@ -43,6 +43,27 @@ function convertURIregex(input) {
     return input;
 }
 
+function getComparisonText(comparison) {
+    switch (comparison) {
+        case "<":
+            return "$lt";
+        case "<=":
+            return "$lte";
+        case ">":
+            return "$gt";
+        case ">=":
+            return "$gte";
+        default:
+            return "$eq";
+    }
+}
+
+function getComparisonObject(comparison, value) {
+    const comparisonString = getComparisonText(comparison);
+
+    return Object.defineProperty({}, comparisonString, {value, writable: true, configurable: true, enumerable: true});
+}
+
 top_pp_list = [];
 
 clientdb.connect( function(err, db) {
@@ -107,18 +128,86 @@ function makeBoard() {
     });
 
     app.get('/whitelist', (req, res) => {
-        var page = parseInt(req.url.split('?page=')[1]);
-        var query = req.url.split('?query=')[1]
-        var mapquery;
-        if (!page) {page = 1;}
-        if (!query) {mapquery = {}; query = '';}
-        else {
-            var regexquery = new RegExp(convertURIregex(query), 'i'); 
-            mapquery = {mapname: regexquery};
+        const page = parseInt(req.url.split('?page=')[1]) || 1;
+        const query = convertURI(req.url.split('?query=')[1] || "").toLowerCase();
+        const mapquery = {};
+        const sort = { mapname: 1 };
+        if (query) {
+            let mapNameQuery = "";
+            const comparisonRegex = /[<=>]{1,2}/;
+            const finalQueries = query.split(/\s+/g);
+            for (const finalQuery of finalQueries) {
+                let [key, value] = finalQuery.split(comparisonRegex, 2);
+                const comparison = (comparisonRegex.exec(finalQuery) ?? ["="])[0];
+                switch (key) {
+                    case "cs":
+                    case "ar":
+                    case "od":
+                    case "hp":
+                    case "sr":
+                        const propertyName = `diffstat.${key}`;
+                        if (mapquery.hasOwnProperty(propertyName)) {
+                            Object.defineProperty(mapquery[propertyName], getComparisonText(comparison), {value: parseFloat(value), writable: true, configurable: true, enumerable: true});
+                        } else {
+                            Object.defineProperty(mapquery, `diffstat.${key}`, {value: getComparisonObject(comparison, parseFloat(value)), writable: true, configurable: true, enumerable: true});
+                        }
+                        break;
+                    case "star":
+                    case "stars":
+                        if (mapquery.hasOwnProperty("diffstat.sr")) {
+                            Object.defineProperty(mapquery["diffstat.sr"], getComparisonText(comparison), {value: parseFloat(value), writable: true, configurable: true, enumerable: true});
+                        } else {
+                            Object.defineProperty(mapquery, "diffstat.sr", {value: getComparisonObject(comparison, parseFloat(value)), writable: true, configurable: true, enumerable: true});
+                        }
+                        break;
+                    case "sort":
+                        const isDescendSort = value.startsWith("-");
+                        if (isDescendSort) {
+                            value = value.substring(1);
+                        }
+                        switch (value) {
+                            case "beatmapid":
+                            case "mapid":
+                            case "id":
+                                Object.defineProperty(sort, "mapid", {value: isDescendSort ? -1 : 1, writable: true, configurable: true, enumerable: true});
+                                break;
+                            case "beatmapname":
+                            case "mapname":
+                            case "name":
+                                Object.defineProperty(sort, "mapname", {value: isDescendSort ? -1 : 1, writable: true, configurable: true, enumerable: true});
+                                break;
+                            case "cs":
+                            case "ar":
+                            case "od":
+                            case "hp":
+                                Object.defineProperty(sort, `diffstat.${value}`, {value: isDescendSort ? -1 : 1, writable: true, configurable: true, enumerable: true});
+                                break;
+                            case "sr":
+                            case "star":
+                            case "stars":
+                                Object.defineProperty(sort, "diffstat.sr", {value: isDescendSort ? -1 : 1, writable: true, configurable: true, enumerable: true});
+                                break;
+                            default:
+                                mapNameQuery += finalQuery + " ";
+                        }
+                        break;
+                    default:
+                        mapNameQuery += finalQuery + " ";
+                }
+            }
+            if (mapNameQuery) {
+                const regexQuery = mapNameQuery.trim().split(/\s+/g).map(v => {
+                    return {mapname: new RegExp(convertURIregex(v, "i"))};
+                });
+                Object.defineProperty(mapquery, "$and", {value: regexQuery, writable: false, configurable: true, enumerable: true});
+            }
         }
-        var mapsort = { mapname: 1 };
-        whitelistdb.find(mapquery, {projection: {_id: 0}}).sort(mapsort).skip((page-1)*30).limit(30).toArray(function(err, resarr) {
-            //console.log(resarr);
+        // Allow star rating sort to override beatmap title sort
+        if (sort.hasOwnProperty("diffstat.sr")) {
+            delete sort["mapname"];
+        }
+        whitelistdb.find(mapquery, {projection: {_id: 0, mapid: 1, mapname: 1, diffstat: 1}}).sort(sort).skip((page-1)*30).limit(30).toArray(function(err, resarr) {
+            resarr.map(v => v.diffstat.sr = parseFloat((v.diffstat.sr).toFixed(2)));
             var title = 'Map Whitelisting Board'
             res.render('whitelist', {
                 title: title,
