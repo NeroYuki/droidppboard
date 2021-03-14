@@ -148,17 +148,17 @@ function makeBoard() {
                     case "bpm":
                         const propertyName = `diffstat.${key}`;
                         if (mapquery.hasOwnProperty(propertyName)) {
-                            Object.defineProperty(mapquery[propertyName], getComparisonText(comparison), {value: parseFloat(value), writable: true, configurable: true, enumerable: true});
+                            mapquery[propertyName][getComparisonText(comparison)] = parseFloat(value);
                         } else {
-                            Object.defineProperty(mapquery, propertyName, {value: getComparisonObject(comparison, parseFloat(value)), writable: true, configurable: true, enumerable: true});
+                            mapquery[propertyName] = getComparisonObject(comparison, parseFloat(value));
                         }
                         break;
                     case "star":
                     case "stars":
                         if (mapquery.hasOwnProperty("diffstat.sr")) {
-                            Object.defineProperty(mapquery["diffstat.sr"], getComparisonText(comparison), {value: parseFloat(value), writable: true, configurable: true, enumerable: true});
+                            mapquery["diffstat.sr"][getComparisonText(comparison)] = parseFloat(value);
                         } else {
-                            Object.defineProperty(mapquery, "diffstat.sr", {value: getComparisonObject(comparison, parseFloat(value)), writable: true, configurable: true, enumerable: true});
+                            mapquery["diffstat.sr"] = getComparisonObject(comparison, parseFloat(value));
                         }
                         break;
                     case "sort":
@@ -170,24 +170,24 @@ function makeBoard() {
                             case "beatmapid":
                             case "mapid":
                             case "id":
-                                Object.defineProperty(sort, "mapid", {value: isDescendSort ? -1 : 1, writable: true, configurable: true, enumerable: true});
+                                sort.mapid = isDescendSort ? -1 : 1;
                                 break;
                             case "beatmapname":
                             case "mapname":
                             case "name":
-                                Object.defineProperty(sort, "mapname", {value: isDescendSort ? -1 : 1, writable: true, configurable: true, enumerable: true});
+                                sort.mapname = isDescendSort ? -1 : 1;
                                 break;
                             case "cs":
                             case "ar":
                             case "od":
                             case "hp":
                             case "bpm":
-                                Object.defineProperty(sort, `diffstat.${value}`, {value: isDescendSort ? -1 : 1, writable: true, configurable: true, enumerable: true});
+                                sort[`diffstat.${value}`] = isDescendSort ? -1 : 1;
                                 break;
                             case "sr":
                             case "star":
                             case "stars":
-                                Object.defineProperty(sort, "diffstat.sr", {value: isDescendSort ? -1 : 1, writable: true, configurable: true, enumerable: true});
+                                sort["diffstat.sr"] = isDescendSort ? -1 : 1;
                                 break;
                             default:
                                 mapNameQuery += finalQuery + " ";
@@ -201,11 +201,11 @@ function makeBoard() {
                 const regexQuery = mapNameQuery.trim().split(/\s+/g).map(v => {
                     return {mapname: new RegExp(convertURIregex(v, "i"))};
                 });
-                Object.defineProperty(mapquery, "$and", {value: regexQuery, writable: false, configurable: true, enumerable: true});
+                mapquery.$and = regexQuery;
             }
         }
         if (!sort.hasOwnProperty("mapname")) {
-            Object.defineProperty(sort, "mapname", {value: 1, writable: false, configurable: true, enumerable: true});
+            sort.mapname = 1;
         }
         // Allow SR and BPM sort to override beatmap title sort
         if (sort.hasOwnProperty("diffstat.sr") || sort.hasOwnProperty("diffstat.bpm")) {
