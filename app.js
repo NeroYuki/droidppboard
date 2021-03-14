@@ -150,7 +150,7 @@ function makeBoard() {
                         if (mapquery.hasOwnProperty(propertyName)) {
                             Object.defineProperty(mapquery[propertyName], getComparisonText(comparison), {value: parseFloat(value), writable: true, configurable: true, enumerable: true});
                         } else {
-                            Object.defineProperty(mapquery, `diffstat.${key}`, {value: getComparisonObject(comparison, parseFloat(value)), writable: true, configurable: true, enumerable: true});
+                            Object.defineProperty(mapquery, propertyName, {value: getComparisonObject(comparison, parseFloat(value)), writable: true, configurable: true, enumerable: true});
                         }
                         break;
                     case "star":
