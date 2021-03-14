@@ -212,7 +212,6 @@ function makeBoard() {
             delete sort.mapname;
         }
         whitelistdb.find(mapquery, {projection: {_id: 0, mapid: 1, mapname: 1, diffstat: 1}}).sort(sort).skip((page-1)*30).limit(30).toArray(function(err, resarr) {
-            resarr.map(v => v.diffstat.sr = parseFloat((v.diffstat.sr).toFixed(2)));
             var title = 'Map Whitelisting Board'
             res.render('whitelist', {
                 title: title,
