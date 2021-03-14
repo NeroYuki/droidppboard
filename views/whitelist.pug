@@ -17,6 +17,8 @@ h3
             a(href='/whitelist?page=1',class='nav', class='active')= "Whitelist"
         li(class='nav')
             a(href='/toppp',class='nav')= "Top PP"
+        li(class="nav")
+            a(href='/calculate', class="nav")= "Calculate Beatmap PP"
         li(class='nav')
             a(href='/about',class='nav')= "About / Donation"
 
@@ -41,13 +43,23 @@ hr
 
 table(border="0", width="100%")
     tbody
-        th(width="10%")= "Map ID"
-        th(width="80%")= "Map Name"
+        th(width="7.5%")= "Map ID"
+        th(width="70%")= "Map Name"
+        th(width="2.5%")= "CS"
+        th(width="2.5%")= "AR"
+        th(width="2.5%")= "OD"
+        th(width="2.5%")= "HP"
+        th(width="2.5%")= "SR"
         th(width="10%")= "osu! redirect"
         each val in list
             tr
                 td= val.mapid
                 td= val.mapname
+                td= val.diffstat.cs
+                td= val.diffstat.ar
+                td= val.diffstat.od
+                td= val.diffstat.hp
+                td= val.diffstat.sr 
                 td
                     a(href='https://osu.ppy.sh/b/'+val.mapid)= "Link"
 
@@ -62,4 +74,48 @@ div
         li(class="nav")
             a(href='/whitelist?page=' + (page+1) + (query ? '?query='+query : ''), class="pagenav")= "Next Page >>>"
 
+hr
 
+div
+    h3 Search Query Guide 
+    h7
+        strong Available filter option:
+        |  CS, AR, OD, HP, SR
+        br
+        strong Available sorting option:
+        |  CS, AR, OD, HP, SR, mapid, mapname (you can put "-" in front to use descend sort instead of ascend)
+        br
+        br
+        strong Equality symbols for filter option:
+        |
+        ul 
+            li <= (less than or equal to)
+            li < (less than)
+            li = (equal to)
+            li > (more than)
+            li >= (more than or equal to)
+        | All filter and sort options are case insensitive, with each of them separated by space.
+        br
+        br
+        | By default, there is no filter, and the sort option is set to beatmap name.
+        br
+        br
+        | Anything that doesn't fall into any of the filter or sort option will be treated as searching beatmap name.
+        br
+        br
+        strong Examples:
+        ul 
+            li
+                strong: i cs>=4.2 cs<=5 sort=cs
+                |  will search for beatmaps with CS between 4.2 (inclusive) and 5 (inclusive) and sort them based on CS ascendingly
+            li
+                strong: i od>=5 od<9 ar>7 ar<=9.7 sort=-ar
+                |  will search for beatmaps with AR between 7 (exclusive) and 9.7 (inclusive) and OD between 5 (inclusive) and 9 (exclusive), and then
+                |  sorting the search result by AR descendingly
+            li
+                strong: i cs>=4.2 ar>9.3 od>=8 hp>=5 sort=-sr logic boi is the best
+                |  will search for beatmaps with CS above 4.2 (inclusive), AR above 9.3 (exclusive), OD above 8 (inclusive),
+                |  HP above 5 (inclusive), and matches the keyword "logic boi is the best" (much like osu! search function),
+                |  and then sorting the search result by star rating descendingly
+
+hr
