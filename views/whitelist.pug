@@ -44,12 +44,13 @@ hr
 table(border="0", width="100%")
     tbody
         th(width="7.5%")= "Map ID"
-        th(width="70%")= "Map Name"
+        th(width="67.5%")= "Map Name"
         th(width="2.5%")= "CS"
         th(width="2.5%")= "AR"
         th(width="2.5%")= "OD"
         th(width="2.5%")= "HP"
         th(width="2.5%")= "SR"
+        th(width="2.5%")= "BPM"
         th(width="10%")= "osu! redirect"
         each val in list
             tr
@@ -60,6 +61,7 @@ table(border="0", width="100%")
                 td= val.diffstat.od
                 td= val.diffstat.hp
                 td= val.diffstat.sr 
+                td= val.diffstat.bpm
                 td
                     a(href='https://osu.ppy.sh/b/'+val.mapid)= "Link"
 
