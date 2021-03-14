@@ -131,7 +131,7 @@ function makeBoard() {
         const page = parseInt(req.url.split('?page=')[1]) || 1;
         const query = convertURI(req.url.split('?query=')[1] || "").toLowerCase();
         const mapquery = {};
-        const sort = { mapname: 1 };
+        const sort = {};
         if (query) {
             let mapNameQuery = "";
             const comparisonRegex = /[<=>]{1,2}/;
@@ -145,6 +145,7 @@ function makeBoard() {
                     case "od":
                     case "hp":
                     case "sr":
+                    case "bpm":
                         const propertyName = `diffstat.${key}`;
                         if (mapquery.hasOwnProperty(propertyName)) {
                             Object.defineProperty(mapquery[propertyName], getComparisonText(comparison), {value: parseFloat(value), writable: true, configurable: true, enumerable: true});
@@ -180,6 +181,7 @@ function makeBoard() {
                             case "ar":
                             case "od":
                             case "hp":
+                            case "bpm":
                                 Object.defineProperty(sort, `diffstat.${value}`, {value: isDescendSort ? -1 : 1, writable: true, configurable: true, enumerable: true});
                                 break;
                             case "sr":
@@ -202,9 +204,12 @@ function makeBoard() {
                 Object.defineProperty(mapquery, "$and", {value: regexQuery, writable: false, configurable: true, enumerable: true});
             }
         }
-        // Allow star rating sort to override beatmap title sort
-        if (sort.hasOwnProperty("diffstat.sr")) {
-            delete sort["mapname"];
+        if (!sort.hasOwnProperty("mapname")) {
+            Object.defineProperty(sort, "mapname", {value: 1, writable: false, configurable: true, enumerable: true});
+        }
+        // Allow SR and BPM sort to override beatmap title sort
+        if (sort.hasOwnProperty("diffstat.sr") || sort.hasOwnProperty("diffstat.bpm")) {
+            delete sort.mapname;
         }
         whitelistdb.find(mapquery, {projection: {_id: 0, mapid: 1, mapname: 1, diffstat: 1}}).sort(sort).skip((page-1)*30).limit(30).toArray(function(err, resarr) {
             resarr.map(v => v.diffstat.sr = parseFloat((v.diffstat.sr).toFixed(2)));

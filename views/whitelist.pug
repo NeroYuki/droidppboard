@@ -80,10 +80,10 @@ div
     h3 Search Query Guide 
     h7
         strong Available filter option:
-        |  CS, AR, OD, HP, SR
+        |  CS, AR, OD, HP, SR, BPM
         br
         strong Available sorting option:
-        |  CS, AR, OD, HP, SR, mapid, mapname (you can put "-" in front to use descend sort instead of ascend)
+        |  CS, AR, OD, HP, SR, BPM, mapid, mapname (you can put "-" in front to use descend sort instead of ascend)
         br
         br
         strong Equality symbols for filter option:
@@ -100,6 +100,9 @@ div
         | By default, there is no filter, and the sort option is set to beatmap name.
         br
         br
+        | Using SR and/or BPM sort option will override beatmap name sort option.
+        br
+        br
         | Anything that doesn't fall into any of the filter or sort option will be treated as searching beatmap name.
         br
         br
@@ -112,6 +115,9 @@ div
                 strong: i od>=5 od<9 ar>7 ar<=9.7 sort=-ar
                 |  will search for beatmaps with AR between 7 (exclusive) and 9.7 (inclusive) and OD between 5 (inclusive) and 9 (exclusive), and then
                 |  sorting the search result by AR descendingly
+            li 
+                strong: i od>=7 bpm>=180
+                |  will search for beatmaps with OD above 7 (inclusive) and BPM above 180 (inclusive) and sort them based on BPM ascendingly
             li
                 strong: i cs>=4.2 ar>9.3 od>=8 hp>=5 sort=-sr logic boi is the best
                 |  will search for beatmaps with CS above 4.2 (inclusive), AR above 9.3 (exclusive), OD above 8 (inclusive),
