@@ -199,7 +199,7 @@ function makeBoard() {
             }
             if (mapNameQuery) {
                 const regexQuery = mapNameQuery.trim().split(/\s+/g).map(v => {
-                    return {mapname: new RegExp(convertURIregex(v, "i"))};
+                    return {mapname: new RegExp(convertURIregex(v), "i")};
                 });
                 mapquery.$and = regexQuery;
             }
